@@ -13,13 +13,13 @@ let sequence file =
     |> String.to_list
     |> List.filter_map ~f:Char.get_digit
 
-let a file =
-    sequence file |> solve 1
+let a seq =
+    solve 1 seq
 
-let b file =
-    let seq = sequence file in
+let b seq =
     solve (List.length seq / 2) seq
 
 let solve =
-    a "./2017/data/1a.txt" |> printf "a: %d\n";
-    b "./2017/data/1a.txt" |> printf "b: %d\n";
+    let seq = sequence "./2017/data/1a.txt" in
+    a seq |> printf "a: %d\n";
+    b seq |> printf "b: %d\n";
