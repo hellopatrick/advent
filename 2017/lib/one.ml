@@ -5,8 +5,8 @@ let shift l n =
     List.append second first
 
 let solve n sequence =
-    let f acc a b = if a = b then acc + a else acc
-    in List.fold2_exn sequence (shift sequence n) ~init:0 ~f
+    let f acc a b = if a = b then acc + a else acc in
+    List.fold2_exn sequence (shift sequence n) ~init:0 ~f
 
 let sequence file =
     Utils.read file
