@@ -1,0 +1,10 @@
+# jbuilder working directory
+_build/
+
+*.install
+
+# merin
+.merlin
+
+# inputs and such.
+data/

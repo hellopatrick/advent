@@ -1,0 +1,17 @@
+(jbuild_version 1)
+
+(executables
+  (
+    (names (main))
+    (libraries (core advent))
+  )
+)
+
+(install
+  (
+    (section bin)
+    (files
+      ((main.exe as advent))
+    )
+  )
+)

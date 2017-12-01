@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+  (
+    (name advent)
+    (public_name advent)
+    (libraries (core))
+  )
+)
