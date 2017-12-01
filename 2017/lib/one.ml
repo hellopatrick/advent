@@ -17,5 +17,9 @@ let a file =
     sequence file |> solve 1
 
 let b file =
-    let sequence = sequence file in
-    solve (List.length sequence / 2) sequence
+    let seq = sequence file in
+    solve (List.length seq / 2) seq
+
+let solve =
+    a "./2017/data/1a.txt" |> printf "a: %d\n";
+    b "./2017/data/1a.txt" |> printf "b: %d\n";
