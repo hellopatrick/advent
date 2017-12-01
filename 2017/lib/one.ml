@@ -8,10 +8,9 @@ let solve n sequence =
     let f acc a b = if a = b then acc + a else acc in
     List.fold2_exn sequence (shift sequence n) ~init:0 ~f
 
-let sequence file =
-    Utils.read file
-    |> String.to_list
-    |> List.filter_map ~f:Char.get_digit
+let sequence str =
+    let chars = String.to_list str in
+    List.filter_map chars ~f:Char.get_digit
 
 let a seq =
     solve 1 seq
@@ -20,6 +19,7 @@ let b seq =
     solve (List.length seq / 2) seq
 
 let solve =
-    let seq = sequence "./2017/data/1a.txt" in
+    let data = Utils.read "./2017/data/1a.txt" in
+    let seq = sequence data in
     a seq |> printf "a: %d\n";
     b seq |> printf "b: %d\n";
