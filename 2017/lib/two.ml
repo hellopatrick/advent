@@ -1,15 +1,15 @@
 open Core
 
 let rec divisible numbers =
-    let rec check j = function
-    | [] -> None
-    | h::t when h mod j = 0 -> Some (h / j)
-    | h::t when j mod h = 0 -> Some (j / h)
-    | _::t -> check j t in
+    let check a b =
+        if a % b = 0 then Some (a / b)
+        else if b % a = 0 then Some (b / a)
+        else None
+    in
     match numbers with
     | [] -> 0
     | h::t ->
-        match check h t with
+        match List.find_map t ~f:(check h) with
         | Some n -> n
         | None -> divisible t
 
