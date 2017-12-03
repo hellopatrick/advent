@@ -1,7 +1,5 @@
 open Core
 
-(* Part A of Day 3 was done by hand... *)
-
 module Direction = struct
     type t = Left | Right | Up | Down
 
