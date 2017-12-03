@@ -61,8 +61,8 @@ let next_dir map point dir =
 
 let rec a_spiral map prev dir goal =
     let curr = Point.move prev dir in
-    let n = Map.find map prev |> Option.value_map ~default:0 ~f:(fun prev -> prev + 1) in
-    let map = Map.add ~key:curr ~data:n map in
+    let n = PointMap.find map prev |> Option.value_map ~default:0 ~f:(fun prev -> prev + 1) in
+    let map = PointMap.add ~key:curr ~data:n map in
     if n = goal then curr
     else
         let next_dir = next_dir map curr dir in
@@ -71,7 +71,7 @@ let rec a_spiral map prev dir goal =
 let rec b_spiral map prev dir goal =
     let curr = Point.move prev dir in
     let n = sum_neighbors map curr in
-    let map = Map.add ~key:curr ~data:n map in
+    let map = PointMap.add ~key:curr ~data:n map in
     if n > goal then n
     else
         let next_dir = next_dir map curr dir in
