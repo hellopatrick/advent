@@ -59,16 +59,29 @@ let next_dir map point dir =
     | Some _ -> dir
     | None -> left
 
-let rec spiral map prev dir goal =
+let rec a_spiral map prev dir goal =
+    let curr = Point.move prev dir in
+    let n = Map.find map prev |> Option.value_map ~default:0 ~f:(fun prev -> prev + 1) in
+    let map = Map.add ~key:curr ~data:n map in
+    if n = goal then curr
+    else
+        let next_dir = next_dir map curr dir in
+        a_spiral map curr next_dir goal
+
+let rec b_spiral map prev dir goal =
     let curr = Point.move prev dir in
     let n = sum_neighbors map curr in
     let map = Map.add ~key:curr ~data:n map in
     if n > goal then n
     else
         let next_dir = next_dir map curr dir in
-        spiral map curr next_dir goal
+        b_spiral map curr next_dir goal
 
 let solve () =
     let m = PointMap.of_alist_exn [(0, 0), 1] in
-    let j = spiral m (0, 0) Direction.Right 368078 in
-    printf "b: %d\n" j
+
+    let x, y = a_spiral m (0, 0) Direction.Right 368078 in
+    printf "a: %d\n" Int.(abs x + abs y);
+
+    let j = b_spiral m (0, 0) Direction.Right 368078 in
+    printf "b: %d\n" j;
