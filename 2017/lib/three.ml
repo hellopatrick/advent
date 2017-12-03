@@ -5,12 +5,6 @@ open Core
 module Direction = struct
     type t = Left | Right | Up | Down
 
-    let increment = function
-    | Right -> (1, 0)
-    | Left -> (-1, 0)
-    | Up -> (0, 1)
-    | Down -> (0, -1)
-
     let leftside = function
     | Right -> Up
     | Left -> Down
@@ -35,28 +29,28 @@ module Point = struct
         | Direction.Left -> (x-1, y)
         | Direction.Up -> (x, y+1)
         | Direction.Down -> (x, y-1)
+
+    let neighbors (x, y) =
+        [
+            (x-1, y+1); (x, y+1); (x+1, y+1);
+            (x-1, y); (x+1, y);
+            (x-1, y-1); (x, y-1); (x+1, y-1);
+        ]
 end
 
-module PointMap = Map.Make(Point)
+module PointMap = struct
+    include Map.Make(Point)
 
-let neighbors (x, y) =
-    [
-        (x-1, y+1); (x, y+1); (x+1, y+1);
-        (x-1, y); (x+1, y);
-        (x-1, y-1); (x, y-1); (x+1, y-1);
-    ]
+    let find_or map k ~default =
+        find map k |> Option.value ~default
 
-let find map k =
-    match Map.find map k with
-    | Some n -> n
-    | None -> 0
-
-let neighbor_values map (x, y) =
-    let neighbors = neighbors (x, y) in
-    List.map neighbors ~f:(find map)
+    let neighbors map (x, y) =
+        let neighbors = Point.neighbors (x, y) in
+        List.map neighbors ~f:(find_or map ~default:0)
+end
 
 let sum_neighbors map point =
-    neighbor_values map point |> List.fold ~init:0 ~f:Int.(+)
+    PointMap.neighbors map point |> List.fold ~init:0 ~f:Int.(+)
 
 let next_dir map point dir =
     let left = Direction.leftside dir in
