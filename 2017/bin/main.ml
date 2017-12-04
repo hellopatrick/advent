@@ -2,11 +2,9 @@ open Core
 open Advent
 
 let _ =
-    printf "day one:\n";
-    One.solve ();
-
-    printf "day two:\n";
-    Two.solve ();
-
-    printf "day three:\n";
-    Three.solve ();
+    match Sys.argv.(1) |> Int.of_string with
+    | 1 -> printf "day one:\n"; One.solve ();
+    | 2 -> printf "day two:\n"; Two.solve ();
+    | 3 -> printf "day three:\n"; Three.solve ();
+    | 4 -> printf "day four:\n"; Four.solve ();
+    | _ -> printf "not there yet."
