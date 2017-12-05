@@ -3,7 +3,7 @@
 (executables
   (
     (names (main))
-    (libraries (core advent))
+    (libraries (core advent2017))
   )
 )
 
@@ -11,7 +11,7 @@
   (
     (section bin)
     (files
-      ((main.exe as advent))
+      ((main.exe as advent2017))
     )
   )
 )

@@ -2,8 +2,8 @@
 
 (library
   (
-    (name advent)
-    (public_name advent)
+    (name advent2017)
+    (public_name advent2017)
     (libraries (core))
   )
 )

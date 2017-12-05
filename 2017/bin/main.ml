@@ -1,5 +1,5 @@
 open Core
-open Advent
+open Advent2017
 
 let _ =
     match Sys.argv.(1) |> Int.of_string with
