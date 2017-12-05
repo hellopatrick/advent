@@ -1,14 +1,14 @@
 open Core
 
 let rec run_a instructions current n =
-    if current >= Array.length instructions then n
+    if current < 0 || current >= Array.length instructions then n
     else
         let jump = Array.get instructions current in
         Array.set instructions current (jump + 1);
         run_a instructions (jump + current) (n + 1)
 
 let rec run_b instructions current n =
-    if current >= Array.length instructions then n
+    if current < 0 || current >= Array.length instructions then n
     else
         let jump = Array.get instructions current in
         let increment = if jump >= 3 then -1 else 1 in
