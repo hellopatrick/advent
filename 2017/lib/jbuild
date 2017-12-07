@@ -4,6 +4,6 @@
   (
     (name advent2017)
     (public_name advent2017)
-    (libraries (core))
+    (libraries (core re2))
   )
 )

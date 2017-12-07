@@ -3,7 +3,7 @@
 (executables
   (
     (names (main))
-    (libraries (core advent2017))
+    (libraries (core re2 advent2017))
   )
 )
 
