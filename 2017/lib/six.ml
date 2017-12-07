@@ -14,7 +14,6 @@ let rec redistribute ary n i =
 
 let compute ary =
     let seen = Sexp.Map.empty in
-
     let rec aux ary seen k =
         let i, max = max ary in
         ary.(i) <- 0;
