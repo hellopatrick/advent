@@ -1,7 +1,6 @@
 open Core
 open Re2
 
-
 let rec get_weight tree weights node =
     let my_weight = String.Map.find_exn weights node in
     let children = String.Map.find_exn tree node in
@@ -68,11 +67,11 @@ let handle_line r line =
     | Error _ -> None
 
 let parse_input () =
-    let lines = In_channel.read_lines "./2017/data/7.txt" in
+    let lines = In_channel.read_lines "./tree.txt" in
     let r = Regex.create_exn "([a-z]+) \\(([0-9]+)\\)(?: -> ([\\w, ]*)+)?" in
     List.filter_map lines ~f:(handle_line r)
 
-let solve () =
+let _ =
     let input = parse_input () in
     let nodes = get_nodes input in
     let children = get_child_nodes input in

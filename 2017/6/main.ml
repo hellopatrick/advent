@@ -25,12 +25,12 @@ let compute ary =
     in aux ary seen 1
 
 let parse_input () =
-    In_channel.read_all "./2017/data/6.txt"
+    In_channel.read_all "./registers.txt"
     |> String.split ~on:'\t'
     |> List.map ~f:Int.of_string
     |> Array.of_list
 
-let solve () =
+let _ =
     let input = parse_input () in
     let a, b = compute input in
     printf "a: %d\n" a;

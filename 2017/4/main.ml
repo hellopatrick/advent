@@ -14,9 +14,9 @@ let sort_words words =
 
 let no_anagrams = Fn.compose no_repeats sort_words
 
-let solve () =
+let _ =
     let split_words = String.split ~on:' ' in
-    let passphrases = In_channel.read_lines "./2017/data/4.txt" |> List.map ~f:split_words in
+    let passphrases = In_channel.read_lines "./passphrases.txt" |> List.map ~f:split_words in
 
     List.filter passphrases ~f:no_repeats
     |> List.length

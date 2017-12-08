@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(library
-  (
-    (name advent2017)
-    (public_name advent2017)
-    (libraries (core re2))
-  )
-)

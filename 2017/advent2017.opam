@@ -1,8 +1,0 @@
-opam-version: "1.2.2"
-version: "0.1"
-maintainer: "patrick@donotforget.xyz"
-authors: ["Patrick Rogers"]
-license: "MIT"
-build: [
-  ["jbuilder" "build" "--only" "advent" "--root" "." "-j" jobs "@install"]
-]

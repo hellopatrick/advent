@@ -25,8 +25,8 @@ let parse line =
 
 let sum = List.fold ~init:0 ~f:(fun acc n -> acc + n)
 
-let solve () =
-    let values = In_channel.read_lines "./2017/data/2.txt" |> List.map ~f:parse in
+let _ =
+    let values = In_channel.read_lines "./list.txt" |> List.map ~f:parse in
     let a = List.map values ~f:spread |> sum in
     let b = List.map values ~f:divisible |> sum in
     printf "a: %d\n" a;

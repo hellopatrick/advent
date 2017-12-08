@@ -75,7 +75,7 @@ let rec b_spiral map prev dir goal =
         let next_dir = next_dir map curr dir in
         b_spiral map curr next_dir goal
 
-let solve () =
+let _ =
     let m = PointMap.of_alist_exn [(0, 0), 1] in
 
     let x, y = a_spiral m (0, 0) Direction.Right 368078 in

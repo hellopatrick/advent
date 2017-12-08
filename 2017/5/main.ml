@@ -16,11 +16,11 @@ let rec run_b instructions current n =
         run_b instructions (jump + current) (n + 1)
 
 let parse_input () =
-    In_channel.read_lines "./2017/data/5.txt"
+    In_channel.read_lines "./moves.txt"
     |> List.map ~f:Int.of_string
     |> Array.of_list
 
-let solve () =
+let _ =
     let instructions = parse_input () in
     let result = run_a instructions 0 0 in
     printf "a: %d\n" result;

@@ -18,8 +18,8 @@ let a seq =
 let b seq =
     solve (List.length seq / 2) seq
 
-let solve () =
-    let data = In_channel.read_all "./2017/data/1.txt" in
+let _ =
+    let data = In_channel.read_all "./input.txt" in
     let seq = sequence data in
     a seq |> printf "a: %d\n";
     b seq |> printf "b: %d\n";
