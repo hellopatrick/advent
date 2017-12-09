@@ -6,17 +6,17 @@ let rec solve input ({score; garbage_count; in_garbage; current_group} as state)
     match input with
     | [] -> state
     | '{'::l when in_garbage = false ->
-        solve l {score; garbage_count; in_garbage; current_group = current_group + 1}
+        solve l {state with current_group = current_group + 1}
     | '}'::l when in_garbage = false ->
-        solve l {score = score + current_group; garbage_count; in_garbage; current_group = current_group - 1}
+        solve l {state with score = score + current_group; current_group = current_group - 1}
     | '<'::l when in_garbage = false ->
-        solve l {score; garbage_count; in_garbage = true; current_group}
+        solve l {state with in_garbage = true;}
     | '>'::l  ->
-        solve l {score; garbage_count; in_garbage = false; current_group}
+        solve l {state with in_garbage = false;}
     | '!'::_::l ->
         solve l state
     | _::l when in_garbage = true ->
-        solve l {score; garbage_count = garbage_count + 1; in_garbage = true; current_group}
+        solve l {state with garbage_count = garbage_count + 1;}
     | _::l ->
         solve l state
 
