@@ -27,15 +27,8 @@ let hash init array lengths =
   let f = knot_hash array in
   List.fold lengths ~init ~f
 
-let create_sparse_hash_array () =
-  let array = Array.create ~len:256 0 in
-  for i = 0 to 255 do
-    array.(i) <- i
-  done;
-  array
-
 let create_sparse_hash input =
-  let sparse_hash = create_sparse_hash_array () in
+  let sparse_hash = Array.init 256 Fn.id in
   let rec loop state n =
     if n = 0 then sparse_hash
     else loop (hash state sparse_hash input) (n-1)
