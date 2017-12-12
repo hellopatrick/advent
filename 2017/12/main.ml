@@ -11,18 +11,17 @@ let rec travel map visited n =
     List.fold children ~init:visited ~f
 
 let groups set map =
-  let rec aux set map groups =
-    if Int.Set.is_empty set then groups
-    else
-      let root = Int.Set.choose_exn set in
-      let group = travel map (Int.Set.empty) root in
-      aux (Set.diff set group) map (group::groups)
+  let rec aux unvisited map groups =
+    match Int.Set.choose unvisited with
+    | None -> groups
+    | Some r ->
+      let new_group = travel map (Int.Set.empty) r in
+      aux (Set.diff unvisited new_group) map (new_group::groups)
   in aux set map []
-
-let parse lexbuf = Parser.pipes Lexer.read lexbuf
 
 let process_input filename =
   let f channel =
+    let parse lexbuf = Parser.pipes Lexer.read lexbuf in
     let lexer_buffer = Lexing.from_channel channel in
     lexer_buffer.lex_curr_p <- { lexer_buffer.lex_curr_p with pos_fname = filename};
     parse lexer_buffer
@@ -32,6 +31,7 @@ let _ =
   let pipes = process_input "./pipes.txt" in
   let create_map acc pipe = Int.Map.add acc ~key:pipe.n ~data:pipe.links in
   let pipe_map = List.fold pipes ~init:Int.Map.empty ~f:create_map in
+
   let zero_group = travel pipe_map (Int.Set.empty) 0 in
   printf "zeroth group: %d\n" (Set.length zero_group);
 
