@@ -3,10 +3,20 @@ open Core
 module Layer = struct
   type t = { n:int; depth:int; }
 
+  let of_string str =
+    let convert = function
+      | [n; depth] -> Some {n; depth;}
+      | _ -> None
+    in
+    String.split str ~on:':'
+    |> List.map ~f:(Fn.compose Int.of_string String.strip)
+    |> convert
+
   let will_catch ?(delay=0) layer =
     (layer.n + delay) % (2 * layer.depth - 2) = 0
 
-  let severity layer = layer.n * layer.depth
+  let severity layer =
+    layer.n * layer.depth
 end
 
 let is_caught ?(delay=0) layers =
@@ -25,18 +35,8 @@ let find_safe_time layers =
   in aux layers 0
 
 let parse_inputs () =
-  let parse_line line =
-    let to_layer = function
-      | [n; depth] -> Some Layer.{n; depth;}
-      | _ -> None
-    in
-    String.split line ~on:':'
-    |> List.map ~f:(Fn.compose Int.of_string String.strip)
-    |> to_layer
-  in
-  let open Layer in
   In_channel.read_lines "./input.txt"
-  |> List.filter_map ~f:parse_line
+  |> List.filter_map ~f:Layer.of_string
 
 let _ =
   let input = parse_inputs () in
