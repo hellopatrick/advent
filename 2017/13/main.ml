@@ -39,8 +39,8 @@ let parse_inputs () =
   |> List.filter_map ~f:Layer.of_string
 
 let _ =
-  let input = parse_inputs () in
-  let severity = severity_of_traversal input in
-  printf "a: %d\n" severity;
-  let brute = find_safe_time input in
-  printf "b: %d\n" brute;
+  let firewall = parse_inputs () in
+  let no_delay_severity = severity_of_traversal firewall in
+  printf "a: %d\n" no_delay_severity;
+  let safe_time = find_safe_time firewall in
+  printf "b: %d\n" safe_time;
