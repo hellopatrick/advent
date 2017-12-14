@@ -53,8 +53,6 @@ let _ =
                |> Sequence.to_list_rev
                |> List.rev_map ~f:to_bit_list
                |> List.to_array in
-  (* let sexp = Array.sexp_of_t (Array.sexp_of_t Int.sexp_of_t) blocks in
-     print_endline @@ Sexp.to_string sexp; *)
   let used_squares = Array.map blocks ~f:(Array.count ~f:(Int.equal 1))
                      |> Array.fold ~init:0 ~f:Int.(+) in
   printf "used: %d\n" used_squares;
