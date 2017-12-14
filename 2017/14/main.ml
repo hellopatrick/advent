@@ -1,15 +1,5 @@
 open Core
 
-let set_bits n =
-  let rec aux n bits =
-    if n = 0 then bits
-    else aux (Int.bit_and n (n-1)) (bits + 1)
-  in aux n 0
-
-let count_bits ary =
-  Array.map ary ~f:(set_bits)
-  |> Array.fold ~init:0 ~f:Int.(+)
-
 let build key n =
   let key = sprintf "%s-%d" key n in
   Knot_hash.knot key
@@ -23,7 +13,12 @@ let int_to_binary n =
   bits |> List.to_array
 
 let to_bit_list ary =
-  Array.concat_map ary ~f:int_to_binary
+  let f n =
+    let rec aux acc d =
+      if List.length acc = 8 then acc
+      else aux ((d land 1) :: acc) (d lsr 1)
+    in aux [] n |> List.to_array in
+  Array.concat_map ary ~f
 
 let neighbors x y blocks =
   let f (dx, dy) =
