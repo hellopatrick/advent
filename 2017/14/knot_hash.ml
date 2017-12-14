@@ -42,13 +42,6 @@ let create_dense_hash sparse =
   done;
   dense
 
-let read_input () =
-  let additional_lengths = In_channel.read_all "./input.txt"
-                           |> String.to_list
-                           |> List.map ~f:Char.to_int in
-  List.append additional_lengths [17; 31; 73; 47; 23]
-
-
 let knot string =
   let input = String.to_list string |> List.map ~f:Char.to_int in
   List.append input [17; 31; 73; 47; 23]
