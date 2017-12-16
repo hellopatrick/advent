@@ -12,9 +12,17 @@ let to_string = function
 
 let spin array n =
   let len = Array.length array in
-  let head = Array.slice array 0 (len - n) in
-  let tail = Array.slice array (len - n) len in
-  Array.append tail head
+  let rotate a =
+    let v = a.(0) in
+    for i = 0 to len-2 do
+      a.(i) <- a.(i+1)
+    done;
+    a.(len-1) <- v
+  in
+  let rec aux = function
+    | 0 -> ()
+    | n -> (rotate array); aux (n-1)
+  in aux (len - n)
 
 let exchange = Array.swap
 
@@ -23,9 +31,7 @@ let partner array a b =
   and k, _ = Array.findi_exn array ~f:(fun _ c -> Char.equal b c) in
   exchange array j k
 
-let perform array move =
-  let new_array = match move with
-    | Spin n -> spin array n;
-    | Exchange (j, k) -> exchange array j k; array
-    | Partner (a, b) -> partner array a b; array
-  in new_array
+let perform array = function
+  | Spin n -> spin array n; array
+  | Exchange (j, k) -> exchange array j k; array
+  | Partner (a, b) -> partner array a b; array
