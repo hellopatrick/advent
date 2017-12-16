@@ -16,7 +16,7 @@ let spin array n =
   let tail = Array.slice array (len - n) len in
   Array.append tail head
 
-let exchange array = Array.swap array
+let exchange = Array.swap
 
 let partner array a b =
   let j, _ = Array.findi_exn array ~f:(fun _ c -> Char.equal a c)
