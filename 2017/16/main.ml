@@ -8,21 +8,27 @@ let process_input filename =
     parse lexer_buffer
   in In_channel.with_file filename ~f
 
+let sequence init moves =
+  let f init =
+    let now = List.fold moves ~init ~f:Dance.perform in
+    Some (now, now)
+  in
+  Sequence.unfold ~init ~f
+
+let permutation_not_equal a b =
+  not (Array.equal ~equal:Char.equal a b)
+
 let dance n moves =
-  let rec aux step init seen =
-    if step = 1_000_000_000 then (String.of_char_list @@ Array.to_list init)
-    else
-      let prev = (String.of_char_list @@ Array.to_list init) in
-      match List.findi seen ~f:(fun _ s -> String.equal s prev) with
-      | None ->
-        let seen = List.append seen [prev] in
-        aux (step+1) (List.fold moves ~init ~f:Dance.perform) seen
-      | Some (i, _) ->
-        let k = n % step in
-        List.nth_exn seen k
-  in aux 0 (String.to_array "abcdefghijklmnop") []
+  let seq = sequence (String.to_array "abcdefghijklmnop") moves in
+  let f = permutation_not_equal ((String.to_array "abcdefghijklmnop")) in
+  let cycle = Sequence.take_while seq ~f in
+  let length = Sequence.length cycle in
+  let rep = n % (length + 1) in
+  Sequence.nth_exn (sequence (String.to_array "abcdefghijklmnop") moves) (rep-1)
 
 let _ =
   let moves = process_input "./input.txt" in
   dance 1_000_000_000 moves
-  |> printf "%s\n"
+  |> Array.to_list
+  |> String.of_char_list
+  |> printf "billionth -> %s\n"
