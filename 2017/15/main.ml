@@ -10,7 +10,7 @@ let generator_a init factor =
 let generator_b init factor only =
   let f previous =
     let m = Int.((previous * factor) % 2147483647) in
-    if m % only = 0 then Sequence.Step.Yield (m, m)
+    if m land (only - 1) = 0 then Sequence.Step.Yield (m, m)
     else Sequence.Step.Skip m
   in
   Sequence.unfold_step ~init ~f
