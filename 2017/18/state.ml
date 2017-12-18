@@ -80,4 +80,5 @@ let exec t instruction =
   | Instruction.Jump (c, v) -> jump t c v
 
 let execute t instructions =
-  exec t instructions.(t.line)
+  if t.line < 0 || t.line >= Array.length instructions then {t with state=Terminated}
+  else exec t instructions.(t.line)
