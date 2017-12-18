@@ -6,8 +6,8 @@ let run instructions active waiting =
     match active.state, other.state with
     | Terminated, Terminated -> active, other
     | Terminated, _ -> aux (State.execute other instructions) active
-    | Running, _ -> aux (State.execute active instructions) other
     | Waiting, _ -> aux (State.execute other instructions) active
+    | Running, _ -> aux (State.execute active instructions) other
   in aux active waiting
 
 let process_input filename =
@@ -20,12 +20,15 @@ let process_input filename =
 
 let _ =
   let instructions = process_input "./input.txt" |> List.to_array in
-  let zero_in = Queue.create () in
-  let zero_out = Queue.create () in
 
-  let zero = State.create 0 zero_out zero_in in
-  let one = State.create 1 zero_in zero_out in
-  let open State in
+  let queue_one = Queue.create () in
+  let queue_two = Queue.create () in
+
+  let zero = State.create 0 queue_one queue_two in
+  let one = State.create 1 queue_two queue_one in
+
   let a, b = run instructions zero one in
-  printf "%d -> %d\n" a.name a.sent;
-  printf "%d -> %d\n" b.name b.sent;
+  State.(
+    printf "prog: %d, sent: %d\n" a.name a.sent;
+    printf "prog: %d, sent: %d\n" b.name b.sent;
+  )
