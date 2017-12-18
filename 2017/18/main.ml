@@ -3,7 +3,6 @@ open Core
 let run instructions active waiting =
   let open State in
   let rec aux active other =
-    (* printf "%s\n" (State.to_string active); *)
     match active.state, other.state with
     | Terminated, Terminated -> active, other
     | Terminated, _ -> aux (State.execute other instructions) active
