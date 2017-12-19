@@ -13,7 +13,7 @@ type t = {
 }
 
 let create name send_queue recv_queue =
-  let registers = Char.Map.add (Char.Map.empty) ~key:'p' ~data:name in
+  let registers = Char.Map.of_alist_exn [('p', name);] in
   {name; registers; send_queue; recv_queue; line=0; sent=0; state=Running}
 
 let to_string t =
