@@ -20,7 +20,7 @@ let turn = function
   | Up | Down -> [Left; Right]
   | Left | Right -> [Up; Down]
 
-let check_turn map (x, y) dir =
+let find_turn map (x, y) dir =
   let turns = turn dir in
   match List.find turns ~f:(fun turn ->
       let next = next_point (x,y) turn in Point.Map.find map next |> Option.is_some
@@ -31,13 +31,14 @@ let check_turn map (x, y) dir =
 let next_move map state =
   let next = next_point state.current state.dir in
   match Point.Map.find map next with
-  | None -> check_turn map state.current state.dir
+  | None -> find_turn map state.current state.dir
   | Some _ -> Some (next, state.dir)
 
-let check_for_letter map point letters =
-  match Point.Map.find_exn map point with
-  | Tube -> letters
-  | Letter c -> c::letters
+let update_letters map point letters =
+  match Point.Map.find map point with
+  | Some Tube -> letters
+  | Some Letter c -> c::letters
+  | None -> letters
 
 let solve map =
   let start map =
@@ -46,7 +47,7 @@ let solve map =
     |> Option.value ~default:(0, 0)
   in
   let rec aux map state =
-    let letters = check_for_letter map state.current state.letters in
+    let letters = update_letters map state.current state.letters in
     let steps = state.steps + 1 in
     match next_move map state with
     | None -> {state with letters; steps}
