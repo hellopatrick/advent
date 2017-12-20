@@ -2,22 +2,20 @@ open Core
 
 let table = Vector.Table.create () ~size:1000
 
-let remove_collisions particles =
-  Vector.Table.clear table;
-
-  let f particle =
-    Vector.Table.add_multi table ~key:Particle.(particle.p) ~data:1
-  in Array.iter particles ~f;
-
-  let only_lonely_particles particle =
-    match Vector.Table.find table Particle.(particle.p) with
-    | Some [l] -> true
-    | _ -> false
-  in Array.filter particles ~f:only_lonely_particles
-
 let loop particles =
   let step particles =
     Array.iter particles ~f:Particle.step in
+  let remove_collisions particles =
+    Vector.Table.clear table;
+    let f p =
+      Vector.Table.add_multi table ~key:Particle.(p.p) ~data:1
+    in Array.iter particles ~f;
+
+    let only_lonely_particles p =
+      match Vector.Table.find table Particle.(p.p) with
+      | Some [l] -> true
+      | _ -> false
+    in Array.filter particles ~f:only_lonely_particles in
   let rec aux particles i j =
     step particles;
     let new_particles = remove_collisions particles in
