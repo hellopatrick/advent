@@ -10,7 +10,10 @@ let collide a b =
   Vector.same a.p b.p
 
 let to_string t =
-  Vector.to_string t.p
+  let p = Vector.to_string t.p
+  and v = Vector.to_string t.v
+  and a = Vector.to_string t.a
+  in sprintf "p=%s; v=%s; a=%s;" p v a
 
 let step t =
   let v = Vector.add t.v t.a in

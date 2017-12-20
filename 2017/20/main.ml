@@ -15,16 +15,17 @@ let loop particles =
       | Some [l] -> true
       | _ -> false
     in Array.filter particles ~f:only_lonely_particles in
-  let rec aux particles i j =
+  let rec aux particles i j last_change =
+    if last_change > 10000 then exit 0;
     step particles;
     let new_particles = remove_collisions particles in
     let count = (Array.length new_particles) in
     match count <> i with
     | true ->
-      printf "%d -> %d\n" j count; Out_channel.flush stdout;
-      aux new_particles count (j+1)
-    | false -> aux new_particles i (j+1)
-  in aux particles (Array.length particles) 0
+      printf "t=%02d; collisions=%02d; now=%03d\n" j (i-count) count; Out_channel.flush stdout;
+      aux new_particles count (j+1) 0
+    | false -> aux new_particles i (j+1) (last_change+1)
+  in aux particles (Array.length particles) 0 0
 
 let process_input filename =
   let f channel =
