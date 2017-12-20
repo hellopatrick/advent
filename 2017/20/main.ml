@@ -3,8 +3,7 @@ open Core
 let table = Vector.Table.create () ~size:1000
 
 let loop particles =
-  let step particles =
-    Array.iter particles ~f:Particle.step in
+  let step = Array.iter ~f:Particle.step in
   let remove_collisions particles =
     Vector.Table.clear table;
     let f p =

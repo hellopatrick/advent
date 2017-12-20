@@ -5,9 +5,9 @@ module T = struct
   [@@deriving sexp, compare, hash]
 end
 
+include T
 include Comparable.Make(T)
 include Hashable.Make(T)
-include T
 
 let abs a =
   let x = Int.abs a.x
