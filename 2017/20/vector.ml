@@ -18,9 +18,6 @@ let abs a =
 let compare_manhattan a b =
   T.compare (abs a) (abs b)
 
-let same a b =
-  (Int.equal a.x b.x) && (Int.equal a.y b.y) && (Int.equal a.y b.y)
-
 let to_string t =
   sprintf "(%d, %d, %d)" t.x t.y t.z
 

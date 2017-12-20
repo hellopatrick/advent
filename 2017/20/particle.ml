@@ -1,13 +1,12 @@
 open Core
 
 type t = { mutable p:Vector.t; mutable v:Vector.t; a:Vector.t; }
-[@@deriving sexp, compare]
 
 let compare_manhattan a b =
   Vector.compare_manhattan a.p b.p
 
 let collide a b =
-  Vector.same a.p b.p
+  Vector.equal a.p b.p
 
 let to_string t =
   let p = Vector.to_string t.p
