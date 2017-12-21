@@ -73,7 +73,7 @@ let _ =
     [|false; false; true|];
     [|true; true; true|];
   |] in
-  (* let result = solve initial book 5 in
-     count_on result |> printf "a: %d\n" *)
+  let result = solve initial book 5 in
+  count_on result |> printf "a: %d\n";
   let result = solve initial book 18 in
   count_on result |> printf "b: %d\n"
