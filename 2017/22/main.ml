@@ -34,7 +34,7 @@ let rec solve map state n =
     let position = Direction.go direction state.position in
     let k = if will_infect map state.position then 1 else 0 in
     let new_map = toggle map state.position in
-    solve new_map { position; direction; infected=state.infected + k;} (n-1)
+    solve new_map { position; direction; infected=state.infected + k; } (n-1)
 
 let parse_input () =
   let lines = In_channel.read_lines "./input.txt" in
@@ -42,9 +42,10 @@ let parse_input () =
   let k = -n / 2 in
   let parse_line y map line =
     let chars = String.to_list line in
-    let parse_chars x map = function
-      | '#' -> Point.Map.add map ~key:(x + k, -k - y) ~data:Health.Infected
-      | _ -> Point.Map.add map ~key:(x + k, -k - y) ~data:Health.Clean
+    let parse_chars x map c =
+      let key = (x + k, -k - y)
+      and data = Health.of_char c
+      in Point.Map.add map ~key ~data
     in List.foldi chars ~init:map ~f:parse_chars
   in List.foldi lines ~init:Point.Map.empty ~f:parse_line
 
