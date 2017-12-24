@@ -12,10 +12,6 @@ let of_string str =
     and o = Int.of_string o in (i, o)
   | _ -> failwith "error parsing port."
 
-let is_magnetic = function
-  | (0, _) | (_, 0) -> true
-  | _ -> false
-
 let can_connect p (a, b) = a = p || b = p
 
 let opposite p (a, b) =
