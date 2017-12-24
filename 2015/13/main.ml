@@ -25,7 +25,7 @@ let happiness feelings arrangement =
     and k = if i = n - 1 then 0 else i + 1 in 
     let o = arrangement.(h)
     and q = arrangement.(k) in 
-    Pair.Map.find_exn feelings (p, o) + Pair.Map.find_exn feelings (p, q) 
+    Pair.Map.find_exn feelings (p, o) + Pair.Map.find_exn feelings (p, q)
   in Array.mapi arrangement ~f
      |> Array.fold ~init:0 ~f:(Int.(+))
 
