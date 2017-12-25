@@ -12,6 +12,10 @@ module Recipe = struct
     List.map [capacity; durability; flavor; texture] ~f:(Int.max 0)
     |> List.fold ~init:1 ~f:Int.( * )
 
+  let is_meal_replacement t =
+    let total_calories = List.fold t ~init:0 ~f:(fun acc (i, amt) -> acc + (amt * Ingredient.calories i))
+    in total_calories = 500
+
   let compare a b =
     Int.compare (score a) (score b)
 
@@ -40,6 +44,7 @@ let _ =
   let ingredients = parse_input () in
   let combos = sortings (List.length ingredients) 100 in
   let recipes = List.map combos ~f:(List.zip_exn ingredients) in
-  match List.max_elt recipes ~cmp:Recipe.compare with
+  let low_cal_recipes = List.filter recipes ~f:(Recipe.is_meal_replacement) in
+  match List.max_elt low_cal_recipes ~cmp:Recipe.compare with
   | Some best -> printf "best: %s\n" (Recipe.to_string best)
   | None -> printf "nothing good.\n"

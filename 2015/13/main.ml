@@ -17,14 +17,14 @@ let permutations lst =
   in
   Sequence.unfold ~init:0 ~f:permute
 
-let happiness feelings arrangement = 
+let happiness feelings arrangement =
   let arrangement = List.to_array arrangement in
   let n = Array.length arrangement in
   let f i p =
     let h = if i = 0 then n - 1 else i - 1
-    and k = if i = n - 1 then 0 else i + 1 in 
+    and k = if i = n - 1 then 0 else i + 1 in
     let o = arrangement.(h)
-    and q = arrangement.(k) in 
+    and q = arrangement.(k) in
     Pair.Map.find_exn feelings (p, o) + Pair.Map.find_exn feelings (p, q)
   in Array.mapi arrangement ~f
      |> Array.fold ~init:0 ~f:(Int.(+))
@@ -38,6 +38,15 @@ let get_people graph =
   Pair.Map.keys graph
   |> List.fold ~init:String.Set.empty ~f:(fun set (p, _) -> Set.add set p)
 
+let add_me graph people =
+  let f acc person =
+    Pair.Map.add acc ~key:("me", person) ~data:0
+    |> Pair.Map.add ~key:(person, "me") ~data:0
+  in
+  let graph = Set.fold people ~init:graph ~f
+  and people = Set.add people "me" in
+  graph, people
+
 let _ =
   let graph = parse_input () in
   let people = get_people graph in
@@ -45,4 +54,13 @@ let _ =
   Sequence.map arrangements ~f:(happiness graph)
   |> Sequence.max_elt ~cmp:Int.compare
   |> Option.value ~default:0
-  |> printf "best happiness: %d"
+  |> printf "best happiness: %d\n";
+
+  let graph = parse_input () in
+  let people = get_people graph in
+  let graph, people = add_me graph people in
+  let arrangements = permutations people in
+  Sequence.map arrangements ~f:(happiness graph)
+  |> Sequence.max_elt ~cmp:Int.compare
+  |> Option.value ~default:0
+  |> printf "best happiness with me: %d";

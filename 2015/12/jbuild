@@ -3,7 +3,7 @@
 (executables
     (
         (names (main))
-        (libraries (core))
+        (libraries (core yojson))
         (preprocess (pps (ppx_jane)))
     )
 )

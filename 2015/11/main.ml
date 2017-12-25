@@ -14,7 +14,7 @@ module Password = struct
     in aux (String.to_list t |> List.map ~f:Char.to_int)
 
   let contains_doubles t = 
-    let rec aux chars last set = 
+    let rec aux chars last set =
       match chars with
       | [] -> set
       | c::tl ->
@@ -50,5 +50,5 @@ let rec find_next_password password =
   else find_next_password next
 
 let _ =
-  find_next_password "cqjxjnds"
+  find_next_password "cqjxxyzz"
   |> printf "%s\n"
