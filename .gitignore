@@ -4,3 +4,6 @@ _build
 
 #inputs
 *.txt
+
+#mac cruft
+.DS_Store
