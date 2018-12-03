@@ -13,11 +13,8 @@ module Claim = struct
   type t = {id: int; x: int; y: int; width: int; height: int}
 
   let of_string s =
-    let id, x, y, width, height =
-      Scanf.sscanf s "#%d @ %d,%d: %dx%d" (fun id x y width height ->
-          (id, x, y, width, height) )
-    in
-    {id; x; y; width; height}
+    Scanf.sscanf s "#%d @ %d,%d: %dx%d" (fun id x y width height ->
+        {id; x; y; width; height} )
 
   let coords t =
     let xs = range t.x (t.x + t.width) in
