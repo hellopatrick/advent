@@ -30,11 +30,11 @@ module Claim = struct
     List.fold coords ~init:all_claims ~f:(fun claims coord ->
         Coords.Map.update claims coord ~f )
 
-  let intact all_claims t  = 
-    let f coord = 
-      match Coords.Map.find all_claims coord with 
-      | None -> false 
-      | Some i -> i = 1 
+  let intact all_claims t =
+    let f coord =
+      match Coords.Map.find all_claims coord with
+      | None -> false
+      | Some i -> i = 1
     in
     List.for_all ~f (coords t)
 end
@@ -54,6 +54,6 @@ let part_two claims claim_map =
 let _ =
   let claims = input () in
   let claim_map = build_claim_map claims in
-  printf "overlapping claims: %d" (part_one claim_map);
-  printf "\n";
+  printf "overlapping claims: %d" (part_one claim_map) ;
+  printf "\n" ;
   printf "safe claim: %d" (part_two claims claim_map)
